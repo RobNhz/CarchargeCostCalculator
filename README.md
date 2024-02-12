@@ -1,6 +1,6 @@
 # Electric Vehicle Charging Cost Calculator
 
-This tool allows you to calculate the cost of charging sessions for an electric vehicle, using the Zaptech API to fetch charging session data and the hvakosterstrommen.no API to fetch electricity costs.
+This tool allows you to calculate the cost of charging sessions for an electric vehicle, using the Zaptec API (https://api.zaptec.com/help/index.html) to fetch charging session data and the (https://www.elprisetjustnu.se/elpris-api) API to fetch electricity costs for Sweden.
 
 ## Installation
 
