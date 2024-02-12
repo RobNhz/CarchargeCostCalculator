@@ -12,16 +12,15 @@ from dataclasses import replace
 
 # Enum for price areas
 class PriceArea(Enum):
-    NO1 = "Oslo / Øst-Norge"
-    NO2 = "Kristiansand / Sør-Norge"
-    NO3 = "Trondheim / Midt-Norge"
-    NO4 = "Tromsø / Nord-Norge"
-    NO5 = "Bergen / Vest-Norge"
+    SE1 = "Luleå"
+    SE2 = "Sundsvall"
+    SE3 = "Stockholm"
+    SE4 = "Malmö"
 
 # Data class for electricity cost information
 @dataclass
 class ElectricityCost:
-    NOK_per_kWh: float
+    SEK_per_kWh: float
     EUR_per_kWh: float
     EXR: float
     time_start: str
@@ -46,7 +45,7 @@ def fetch_electricity_cost(date: datetime, area: PriceArea) -> ElectricityCostLi
             return [ElectricityCost(**item) for item in cached_data]
     
     # Construct the API endpoint
-    url = f"https://www.hvakosterstrommen.no/api/v1/prices/{year}/{month}-{day}_{area.name}.json"
+    url = f"https://www.elprisetjustnu.se/api/v1/prices/{year}/{month}-{day}_{area.name}.json"
     
     # Fetch the data from API (NOTE: This will not run in this environment)
     response = requests.get(url)
@@ -77,25 +76,25 @@ def fetch_electricity_cost_utc(date_utc: datetime, area: PriceArea) -> list:
         list: A list of electricity cost data for the entire UTC day.
     """
     # Time zone information
-    oslo_tz = pytz.timezone("Europe/Oslo")
+    stockholm_tz = pytz.timezone("Europe/Stockholm")
 
     # Define the start and end of the UTC day
     start_date_utc = datetime(date_utc.year, date_utc.month, date_utc.day, tzinfo=pytz.utc)
     end_date_utc = start_date_utc + timedelta(days=1) - timedelta(seconds=1)
 
-    # Convert the UTC dates to Oslo time
-    start_date_oslo = start_date_utc.astimezone(oslo_tz).date()
-    end_date_oslo = end_date_utc.astimezone(oslo_tz).date()
+    # Convert the UTC dates to Stockholm time
+    start_date_stockholm = start_date_utc.astimezone(stockholm_tz).date()
+    end_date_stockholm = end_date_utc.astimezone(stockholm_tz).date()
 
-    # Fetch the electricity cost data for the Oslo dates
-    if start_date_oslo == end_date_oslo:
-        costs_oslo = fetch_electricity_cost(start_date_oslo, area)
+    # Fetch the electricity cost data for the Stockholm dates
+    if start_date_stockholm == end_date_stockholm:
+        costs_stockholm = fetch_electricity_cost(start_date_stockholm, area)
     else:
-        costs_oslo = fetch_electricity_cost(start_date_oslo, area) + fetch_electricity_cost(end_date_oslo, area)
+        costs_stockholm = fetch_electricity_cost(start_date_stockholm, area) + fetch_electricity_cost(end_date_stockholm, area)
 
     # Filter the costs based on the original UTC time range and adjust times to UTC
     costs_utc = []
-    for cost in costs_oslo:
+    for cost in costs_stockholm:
         time_start_utc = parser.parse(cost.time_start).astimezone(pytz.utc)
         time_end_utc = parser.parse(cost.time_end).astimezone(pytz.utc)
 
@@ -108,7 +107,7 @@ def fetch_electricity_cost_utc(date_utc: datetime, area: PriceArea) -> list:
 
 if __name__ == "__main__":
     # Example usage
-    date_example = datetime(2023, 10, 14)
-    area_example = PriceArea.NO1
+    date_example = datetime(2024, 01, 01)
+    area_example = PriceArea.SE4
     prices = fetch_electricity_cost_utc(date_example, area_example)
     print(prices)
