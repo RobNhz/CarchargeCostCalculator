@@ -47,8 +47,8 @@ class ChargingSessionEnergy:
     CostCurrency: str
 
 def get_charging_session_energy(secrets, from_date, to_date, 
-                                price_area=PriceArea.NO2, 
-                                low_net_usage_fee=0.2259, high_net_usage_fee=0.3059):
+                                price_area=PriceArea.SE4, 
+                                low_net_usage_fee=0.1259, high_net_usage_fee=0.2459):
     username = secrets["zaptech"]["username"]
     password = secrets["zaptech"]["password"]
 
@@ -157,9 +157,9 @@ def main():
     parser.add_argument('--secrets_file', default='secrets.toml', help='Path to the secrets file. Default is "secrets.toml".')
     parser.add_argument('--username', help='Zaptech API username. Overrides secrets file.')
     parser.add_argument('--password', help='Zaptech API password. Overrides secrets file.')
-    parser.add_argument('--price_area', default='NO2', help='Price area to use for electricity cost. Default is "NO2".')
-    parser.add_argument('--low_net_usage_fee', default=0.2259, type=float, help='Net usage fee for night time and weekends. Default is 0.2259 NOK/kWh.')
-    parser.add_argument('--high_net_usage_fee', default=0.3059, type=float, help='Net usage fee for day time. Default is 0.3059 NOK/kWh.')
+    parser.add_argument('--price_area', default='SE4', help='Price area to use for electricity cost. Default is "SE4".')
+    parser.add_argument('--low_net_usage_fee', default=0.1259, type=float, help='Net usage fee for night time and weekends. Default is 0.1259 SEK/kWh.')
+    parser.add_argument('--high_net_usage_fee', default=0.2459, type=float, help='Net usage fee for day time. Default is 0.2459 SEK/kWh.')
 
     args = parser.parse_args()
     secrets = get_secrets(args)
