@@ -2,6 +2,8 @@
 
 This tool allows you to calculate the cost of charging sessions for an electric vehicle, using the Zaptec API (https://api.zaptec.com/help/index.html) to fetch charging session data and the (https://www.elprisetjustnu.se/elpris-api) API to fetch electricity costs for Sweden.
 
+<p>Elpriser tillhandahålls av <a href="https://www.elprisetjustnu.se">Elpriset just nu.se</a></p>
+
 ## Installation
 
 ### Step 1: Setup the Environment
