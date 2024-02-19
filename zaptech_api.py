@@ -136,8 +136,8 @@ if __name__ == "__main__":
     print(token)
 
     # Get charging sessions
-    from_date = datetime(2024, 2, 1)
-    to_date = datetime(2024, 3, 1)
+    from_date = datetime(2024, 1, 1)
+    to_date = datetime(2024, 12, 31)
 
     sessions = get_charging_sessions(token, from_date, to_date)
     print(sessions)
