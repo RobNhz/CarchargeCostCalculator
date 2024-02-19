@@ -86,7 +86,7 @@ def get_charging_session_energy(secrets, from_date, to_date,
                 continue
 
             # Calculate cost of the energy detail
-            energy_cost = energy.Energy * applicable_cost.NOK_per_kWh
+            energy_cost = energy.Energy * applicable_cost.SEK_per_kWh
 
              # Calculate the net usage fee
             daytime_start = energy_datetime.replace(hour=6, minute=0, second=0, microsecond=0)
@@ -97,9 +97,9 @@ def get_charging_session_energy(secrets, from_date, to_date,
             
             # Use a lower rate during the night and on weekends
             if daytime_start <= energy_datetime < daytime_end and not is_weekend:
-                net_usage_fee_per_kwh = high_net_usage_fee # day time net usage fee in NOK
+                net_usage_fee_per_kwh = high_net_usage_fee # day time net usage fee in SEK
             else:
-                net_usage_fee_per_kwh = low_net_usage_fee # night time and weekend net usage fee in NOK
+                net_usage_fee_per_kwh = low_net_usage_fee # night time and weekend net usage fee in SEK
             
             net_usage_fee = energy.Energy * net_usage_fee_per_kwh
 
@@ -113,13 +113,13 @@ def get_charging_session_energy(secrets, from_date, to_date,
                 SessionId=session.Id,
                 Timestamp=energy_datetime,
                 Energy=energy.Energy,
-                EnergyUsageFee=applicable_cost.NOK_per_kWh,
+                EnergyUsageFee=applicable_cost.SEK_per_kWh,
                 NetUsageFee=net_usage_fee, 
                 EnergyCost=energy_cost,
                 NetUsageCost=net_usage_fee,
                 TotalCostNoVat=total_cost_without_vat,  
                 TotalCostWithVAT=total_cost_with_vat,  
-                CostCurrency="NOK"
+                CostCurrency="SEK"
             )
 
 def get_secrets(args):

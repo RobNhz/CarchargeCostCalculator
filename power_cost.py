@@ -107,7 +107,7 @@ def fetch_electricity_cost_utc(date_utc: datetime, area: PriceArea) -> list:
 
 if __name__ == "__main__":
     # Example usage
-    date_example = datetime(2024, 01, 01)
+    date_example = datetime(2024, 1, 1)
     area_example = PriceArea.SE4
     prices = fetch_electricity_cost_utc(date_example, area_example)
     print(prices)
