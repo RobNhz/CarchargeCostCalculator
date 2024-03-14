@@ -55,7 +55,9 @@ def get_charging_session_energy(secrets, from_date, to_date,
     # Get token
     token = get_zaptech_token(username, password)
 
-    history = get_charging_sessions(token, from_date, to_date)
+    installation_id = "f2a8a525-b90d-497d-89bd-16a9edbf1394"
+
+    history = get_charging_sessions(token, installation_id, from_date, to_date)
     costs = {}
 
     for session in history.Data:
@@ -151,6 +153,7 @@ def get_secrets(args):
 
 def main():
     parser = argparse.ArgumentParser(description='Fetch and calculate charging session energy costs.')
+    parser.add_argument('--installation_id', type=str, help='Installation ID')
     parser.add_argument('--from_date', required=True, type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'), help='Start date (inclusive) in format YYYY-MM-DD.')
     parser.add_argument('--to_date', required=True, type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'), help='End date (exclusive) in format YYYY-MM-DD.')
     parser.add_argument('--output_file', required=False, help='Path to the output CSV file.')
