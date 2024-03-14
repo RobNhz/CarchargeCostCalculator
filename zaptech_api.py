@@ -82,13 +82,14 @@ def get_zaptech_token(username: str, password: str) -> str:
     else:
         raise Exception(f"Authentication failed: {response.status_code} - {response.text}")
 
-def get_charging_sessions(token: str, from_date: datetime, to_date: datetime, 
+def get_charging_sessions(token: str, installation_id: str, from_date: datetime, to_date: datetime, 
                           page_index: int = 0, page_size: int = 500) -> ChargingHistory:
     """
     Fetch charging sessions from the ZapTech API.
 
     Parameters:
         token (str): Bearer token for API authentication.
+        installation_id (str): The installation ID
         from_date (datetime): Start of the date range.
         to_date (datetime): End of the date range.
         page_index (int, optional): Page index for pagination. Defaults to 0.
@@ -102,6 +103,7 @@ def get_charging_sessions(token: str, from_date: datetime, to_date: datetime,
     
     # Query parameters
     params = {
+        "InstallationId": installation_id,
         "From": from_date.isoformat(),
         "To": to_date.isoformat(),
         "PageIndex": page_index,
@@ -136,8 +138,9 @@ if __name__ == "__main__":
     print(token)
 
     # Get charging sessions
+    installation_id = "f2a8a525-b90d-497d-89bd-16a9edbf1394"
     from_date = datetime(2024, 1, 1)
     to_date = datetime(2024, 12, 31)
 
-    sessions = get_charging_sessions(token, from_date, to_date)
+    sessions = get_charging_sessions(token, installation_id, from_date, to_date)
     print(sessions)

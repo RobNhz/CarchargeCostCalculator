@@ -27,7 +27,7 @@ pip install -r requirements.txt
 You can also download `app.py` as a binary for Windows. Extract the zip file and run `app.exe` from the command line:
 
 ```bat
-app.exe --from_date YYYY-MM-DD --to_date YYYY-MM-DD --price_area NO2 -output_file output.csv
+app.exe --from_date YYYY-MM-DD --to_date YYYY-MM-DD --price_area SE2 -output_file output.csv
 ```
 
 ## Usage
